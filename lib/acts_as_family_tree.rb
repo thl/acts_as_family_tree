@@ -1,34 +1,10 @@
-#
-# Get right inside of ActiveRecord and include these setup methods
-#
-class << ActiveRecord::Base
-  
-  def acts_as_family_tree(role, options={})
-    include MM::Acts::FamilyTree::AncestorsAndDescendants
-    init_acts_as_family_tree_anc_and_desc(options)
-    if role==:tree
-      include MM::Acts::FamilyTree::Tree
-      init_acts_as_family_tree_tree(options)
-    elsif role==:node
-      include MM::Acts::FamilyTree::Node
-      init_acts_as_family_tree_node(options)
-    else
-      raise 'acts_as_family_tree requires that you specify a role of :tree or :node - "acts_as_family_tree :node"'
-    end
-  end
-end
-
 # ActsAsFamilyTree
-module MM
-  module Acts
-    module FamilyTree
-    end
-  end
-end
+require 'acts_as_family_tree/active_record/acts/family_tree/ancestors_and_descendants'
+require 'acts_as_family_tree/active_record/acts/family_tree/tree'
+require 'acts_as_family_tree/active_record/acts/family_tree/node'
+require 'acts_as_family_tree/active_record/acts/family_tree/extension'
 
-require 'ancestors_and_descendants'
-require 'tree'
-require 'node'
+ActiveRecord::Base.send :include, ActiveRecord::Acts::FamilyTree::Extension
 
 module ActsAsFamilyTree
 end
