@@ -23,7 +23,7 @@ module ActiveRecord
             validates_presence_of :child_node_id, :parent_node_id
 
             class_eval do
-              include ActiveRecord::Acts::FamilyTree::Tree::InstanceMethods
+              include ActiveRecord::Acts::FamilyTree::Tree::CustomInstanceMethods
             end
           end
 
@@ -44,7 +44,7 @@ module ActiveRecord
         end
 
         ######
-        module InstanceMethods
+        module CustomInstanceMethods
 
           def parent_node?(node)
             parent_node==node
