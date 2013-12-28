@@ -61,14 +61,7 @@ module ActiveRecord
           #
           def ancestors
             return [] if self.ancestor_ids.blank?
-            conditions=[[]]
-            ids = self.ancestor_ids.split('.').delete_if(&:blank?)
-            ids.each do |id|
-              conditions[0] << "#{self.class.table_name}.id = ?"
-              conditions << id
-            end
-            conditions[0]=conditions[0].join(' OR ')
-            self.class.where(conditions)
+            self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).includes(:child_relations)
           end
 
           #
