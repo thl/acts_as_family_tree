@@ -14,12 +14,8 @@ module ActiveRecord
             config.update(options) if options.is_a?(Hash)
             raise 'Please specify a node class. acts_as_family_tree :tree, :node_class=>"MyNodeClass"' if config[:node_class].nil?
 
-            config[:extensions] ||= {}
-            config[:extensions][:child_node] ||= nil
-            config[:extensions][:parent_node] ||= nil
-
-            belongs_to :child_node, :class_name=>config[:node_class], :foreign_key=>:child_node_id, :extend=>config[:extensions][:child_node]
-            belongs_to :parent_node, :class_name=>config[:node_class], :foreign_key=>:parent_node_id, :extend=>config[:extensions][:parent_node]
+            belongs_to :child_node, :class_name=>config[:node_class], :foreign_key=>:child_node_id
+            belongs_to :parent_node, :class_name=>config[:node_class], :foreign_key=>:parent_node_id
             validates_presence_of :child_node_id, :parent_node_id
 
             class_eval do
@@ -36,8 +32,8 @@ module ActiveRecord
             #return find_by_sql("select a.* from #{table_name} as a left join #{table_name} b on a.parent_node_id = b.child_node_id where b.child_node_id IS NULL")
             joins("LEFT JOIN #{table_name} b ON #{table_name}.parent_node_id = b.child_node_id").where('b.child_node_id IS NULL')
             #.from("#{table_name} #{table_name}")
-            #with_scope(:find=>{:conditions=>conditions, :joins=>joins, :select=>'#{table_name}.*', :from=>"#{table_name} #{table_name}"}) do
-            #  find(:all, *args)
+            #where(conditions).joins(joins).select('#{table_name}.*').from("#{table_name} #{table_name}").scoping do
+            #  find.all(*args)
             #end
           end
 

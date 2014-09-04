@@ -38,7 +38,7 @@ module ActiveRecord
           #
           def reset_ancestor_ids
             #puts 'ActsAsFamilyTree -> reset_ancestor_ids'
-            find(:all).each {|r| r.update_ancestor_ids and r.update_descendant_ancestor_ids}
+            self.all.each {|r| r.update_ancestor_ids and r.update_descendant_ancestor_ids}
           end
 
         end
@@ -61,7 +61,7 @@ module ActiveRecord
           #
           def ancestors
             return [] if self.ancestor_ids.blank?
-            self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).includes(:child_relations)
+            self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).includes(:child_relations).references(:child_relations)
           end
 
           #
