@@ -8,7 +8,7 @@ module ActiveRecord
         end
 
         module ClassMethods
-          def acts_as_family_tree(role, options={})
+          def acts_as_family_tree(role, scope = nil, options={})
             class_eval do
               include ActiveRecord::Acts::FamilyTree::AncestorsAndDescendants
             end
@@ -22,7 +22,7 @@ module ActiveRecord
               class_eval do
                 include ActiveRecord::Acts::FamilyTree::Node
               end
-              init_acts_as_family_tree_node(options)
+              init_acts_as_family_tree_node(scope, options)
             else
               raise 'acts_as_family_tree requires that you specify a role of :tree or :node - "acts_as_family_tree :node"'
             end
