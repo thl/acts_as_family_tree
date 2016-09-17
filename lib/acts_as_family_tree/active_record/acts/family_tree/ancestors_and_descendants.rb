@@ -129,7 +129,9 @@ module ActiveRecord
           def update_descendant_ancestor_ids
             #puts 'ActsAsFamilyTree -> update_descendant_ancestor_ids'
             #puts 'Executing update_descendant_ancestor_ids'
-            descendants_r.each {|desc| desc.update_ancestor_ids }
+            Spawnling.new do
+              descendants_r.each {|desc| desc.update_ancestor_ids }
+            end
           end
         end
       end
