@@ -61,7 +61,8 @@ module ActiveRecord
           #
           def ancestors
             return [] if self.ancestor_ids.blank?
-            self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).includes(:child_relations).references(:child_relations)
+            self.ancestor_ids.split('.').delete_if(&:blank?).collect{|i| self.class.find(i)}
+            #self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).includes(:child_relations).references(:child_relations)
           end
 
           #
