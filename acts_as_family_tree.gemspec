@@ -7,15 +7,14 @@ require "acts_as_family_tree/version"
 Gem::Specification.new do |s|
   s.name        = "acts_as_family_tree"
   s.version     = ActsAsFamilyTree::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ActsAsFamilyTree."
-  s.description = "TODO: Description of ActsAsFamilyTree."
+  s.authors     = ["Andres Montano"]
+  s.email       = ["amontano@virginia.edu"]
+  s.homepage    = "http://subjects.kmaps.virginia.edu"
+  s.summary     = "ActsAsFamilyTree is a Rails plugin that gives your ActiveRecord methods and associations useful for a family tree type model."
+  s.description = "ActsAsFamilyTree is a Rails plugin that gives your ActiveRecord methods and associations useful for a family tree type model."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
-
-  s.add_dependency "rails", "~> 4.0"
+  s.add_dependency 'rails', '~> 4.1.16'
   s.add_development_dependency "sqlite3"
 end
