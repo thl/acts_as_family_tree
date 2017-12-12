@@ -11,7 +11,7 @@ module ActiveRecord
         module ClassMethods
 
           def init_acts_as_family_tree_node(scope = nil, options={})
-            config = {:tree_class=>name + 'Tree'}
+            config = {tree_class: name + 'Tree'}
             config.update(options) if options.is_a?(Hash)
             raise 'Please specify a tree class. acts_as_family_tree :node, :tree_class=>"MyTreeClass"' if config[:tree_class].nil?
             relation_table = Object.const_get(config[:tree_class]).table_name
@@ -22,10 +22,10 @@ module ActiveRecord
             config[:extensions][:parents] ||= nil
             config[:extensions][:children] ||= nil
 
-            has_many :parent_relations, scope, :class_name=>config[:tree_class], :foreign_key=>:child_node_id, :dependent=>:destroy, :extend=>config[:extensions][:parent_relations] #, :conditions => config[:conditions]
-            has_many :child_relations, scope, :class_name=>config[:tree_class], :foreign_key=>:parent_node_id, :dependent=>:destroy, :extend=>config[:extensions][:child_relations] #, :conditions => config[:conditions]
-            has_many :parents, :class_name=>name, :through=>:parent_relations, :source=>:parent_node, :extend=>config[:extensions][:parents] #, :conditions => config[:conditions]
-            has_many :children, :class_name=>name, :through=>:child_relations, :source=>:child_node, :extend=>config[:extensions][:children] #, :conditions => config[:conditions]
+            has_many :parent_relations, scope, class_name: config[:tree_class], foreign_key: :child_node_id, dependent: :destroy, extend: config[:extensions][:parent_relations] #, :conditions => config[:conditions]
+            has_many :child_relations, scope, class_name: config[:tree_class], foreign_key: :parent_node_id, dependent: :destroy, extend: config[:extensions][:child_relations] #, :conditions => config[:conditions]
+            has_many :parents, class_name: name, through: :parent_relations, source: :parent_node, extend: config[:extensions][:parents] #, :conditions => config[:conditions]
+            has_many :children, class_name: name, through: :child_relations, source: :child_node, extend: config[:extensions][:children] #, :conditions => config[:conditions]
 
             class_eval <<-EOV
               include ActiveRecord::Acts::FamilyTree::Node::InstanceMethods
