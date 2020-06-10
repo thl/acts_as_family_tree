@@ -125,7 +125,6 @@ PLATFORMS
 DEPENDENCIES
   acts_as_family_tree!
   jquery-rails
-  rails (~> 5.2.3)
 
 BUNDLED WITH
    2.1.4
