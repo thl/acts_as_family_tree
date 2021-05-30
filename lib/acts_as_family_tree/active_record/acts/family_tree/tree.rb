@@ -14,8 +14,8 @@ module ActiveRecord
             config.update(options) if options.is_a?(Hash)
             raise 'Please specify a node class. acts_as_family_tree :tree, :node_class=>"MyNodeClass"' if config[:node_class].nil?
 
-            belongs_to :child_node, :class_name=>config[:node_class], :foreign_key=>:child_node_id
-            belongs_to :parent_node, :class_name=>config[:node_class], :foreign_key=>:parent_node_id
+            belongs_to :child_node, class_name: config[:node_class], foreign_key: :child_node_id, touch: true
+            belongs_to :parent_node, class_name: config[:node_class], foreign_key: :parent_node_id, touch: true
             validates_presence_of :child_node_id, :parent_node_id
 
             class_eval do
