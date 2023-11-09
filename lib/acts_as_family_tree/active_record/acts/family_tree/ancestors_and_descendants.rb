@@ -9,7 +9,7 @@ module ActiveRecord
 
         ######
         module ClassMethods
-          def init_acts_as_family_tree_anc_and_desc(options={})
+          def init_acts_as_family_tree_anc_and_desc(**options)
             # Before saving, set the ancestor_ids
 
             #

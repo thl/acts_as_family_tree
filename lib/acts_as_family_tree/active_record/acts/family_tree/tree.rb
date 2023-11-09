@@ -9,9 +9,9 @@ module ActiveRecord
 
         ######
         module ClassMethods
-          def init_acts_as_family_tree_tree(options={})
+          def init_acts_as_family_tree_tree(**options)
             config = {:node_class=>nil}
-            config.update(options) if options.is_a?(Hash)
+            config.update(**options) if options.is_a?(Hash)
             raise 'Please specify a node class. acts_as_family_tree :tree, :node_class=>"MyNodeClass"' if config[:node_class].nil?
 
             belongs_to :child_node, class_name: config[:node_class], foreign_key: :child_node_id, touch: true

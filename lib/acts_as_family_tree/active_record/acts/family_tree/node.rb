@@ -10,7 +10,7 @@ module ActiveRecord
         ######
         module ClassMethods
 
-          def init_acts_as_family_tree_node(scope = nil, options={})
+          def init_acts_as_family_tree_node(scope = nil, **options)
             config = {tree_class: name + 'Tree'}
             config.update(options) if options.is_a?(Hash)
             raise 'Please specify a tree class. acts_as_family_tree :node, :tree_class=>"MyTreeClass"' if config[:tree_class].nil?
