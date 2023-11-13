@@ -121,7 +121,7 @@ module ActiveRecord
             # beause the regular "ancestors" method depends on what this
             # method does (creates the ancestor_ids)
             value = generate_ancestor_ids
-            self.update_attributes({:ancestor_ids => value, :skip_update => true}) if self.ancestor_ids != value
+            self.update({:ancestor_ids => value, :skip_update => true}) if self.ancestor_ids != value
           end
 
           #
