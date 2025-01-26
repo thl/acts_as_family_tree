@@ -62,7 +62,7 @@ module ActiveRecord
           def ancestors
             return [] if self.ancestor_ids.blank?
             self.ancestor_ids.split('.').delete_if(&:blank?).collect{|i| self.class.find(i)}
-            #self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).includes(:child_relations).references(:child_relations)
+            #self.class.where("#{self.class.table_name}.id" => self.ancestor_ids.split('.').delete_if(&:blank?)).joins(:child_relations).references(:child_relations)
           end
 
           #
@@ -114,7 +114,11 @@ module ActiveRecord
           def update_hierarchy
             update_ancestor_ids and update_descendant_ancestor_ids
           end
-
+          
+          def queued_update_hierarchy(priority: Flare::IndexerJob::HIGH)
+            UpdateHierarchyJob.set(priority: priority).perform_later(self)
+          end
+          
           def update_ancestor_ids
             # puts 'ActsAsFamilyTree -> update_ancestor_ids'
             # Here, we MUST call the recursive version of ancestors,
@@ -130,9 +134,7 @@ module ActiveRecord
           def update_descendant_ancestor_ids
             #puts 'ActsAsFamilyTree -> update_descendant_ancestor_ids'
             #puts 'Executing update_descendant_ancestor_ids'
-            Spawnling.new do
-              descendants_r.each {|desc| desc.update_ancestor_ids }
-            end
+            descendants_r.each {|desc| desc.update_ancestor_ids }
           end
         end
       end
