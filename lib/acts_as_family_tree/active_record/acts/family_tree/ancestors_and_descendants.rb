@@ -116,7 +116,7 @@ module ActiveRecord
           end
           
           def queued_update_hierarchy(priority: Flare::IndexerJob::HIGH)
-            UpdateHierarchyJob.set(priority: priority).perform_later(self)
+            ActsAsFamilyTree::UpdateHierarchyJob.set(priority: priority).perform_later(self)
           end
           
           def update_ancestor_ids
