@@ -8,7 +8,7 @@ module ActiveRecord
         end
 
         ######
-        module ClassMethods
+        class_methods do
           def init_acts_as_family_tree_tree(**options)
             config = {:node_class=>nil}
             config.update(**options) if options.is_a?(Hash)

@@ -7,7 +7,7 @@ module ActiveRecord
         included do
         end
 
-        module ClassMethods
+        class_methods do
           def acts_as_family_tree(role, scope = nil, **options)
             class_eval do
               include ActiveRecord::Acts::FamilyTree::AncestorsAndDescendants

@@ -8,7 +8,7 @@ module ActiveRecord
         end
 
         ######
-        module ClassMethods
+        class_methods do
 
           def init_acts_as_family_tree_node(scope = nil, **options)
             config = {tree_class: name + 'Tree'}
